@@ -28,10 +28,15 @@ public class AnalyzeRowsHandler extends AbstractAnalyzeExplainResultBaseHandler{
     @Override
     public void doAnalyze(List<ExplainResultVO> explainResultVoList, AnalyzeExplainResultVO analyzeExplainResultVo) {
         LOGGER.info("AnalyzeRowsHandler start to analyze explanation of rows");
-        long scanRows = 0L;
+        long scanRows = 1L;
         for (int i = 0; i < explainResultVoList.size(); i++) {
             ExplainResultVO explainResultVo = explainResultVoList.get(i);
-            scanRows *= explainResultVo.getRows();
+            Long rows = explainResultVo.getRows();
+            if (rows == null) {
+                analyzeExplainResultVo.buildNeedPushWarnMsg("扫描行数：为空,请立即检查");
+                return;
+            }
+            scanRows *= rows;
         }
         if (scanRows >= scanRowsThreshold) {
             analyzeExplainResultVo.buildNeedPushWarnMsg(String.format("扫描行数：%s，超出阈值：%s，请立即检查",scanRows,scanRowsThreshold));

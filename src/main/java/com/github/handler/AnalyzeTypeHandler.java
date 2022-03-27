@@ -31,8 +31,12 @@ public class AnalyzeTypeHandler extends AbstractAnalyzeExplainResultBaseHandler{
         LOGGER.info("AnalyzeTypeHandler start to analyze explanation of type");
         for (int i = 0; i < explainResultVoList.size(); i++) {
             ExplainResultVO explainResultVo = explainResultVoList.get(i);
+            if (StringUtils.isEmpty(explainResultVo.getType())) {
+                analyzeExplainResultVo.buildNeedPushWarnMsg("扫描类型：为空,请立即检查");
+                return;
+            }
             if (needPushWarnMsgTypeKeyWords.contains(explainResultVo.getType())) {
-                analyzeExplainResultVo.buildNeedPushWarnMsg(String.format("扫描类型为：%s,请立即处理",explainResultVo.getType()));
+                analyzeExplainResultVo.buildNeedPushWarnMsg(String.format("扫描类型：%s,请立即检查",explainResultVo.getType()));
                 return;
             }
         }

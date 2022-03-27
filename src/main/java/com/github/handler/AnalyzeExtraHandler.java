@@ -31,7 +31,7 @@ public class AnalyzeExtraHandler extends AbstractAnalyzeExplainResultBaseHandler
         LOGGER.info("AnalyzeExtraHandler start to analyze explanation of extra");
         for (int i = 0; i < explainResultVoList.size(); i++) {
             ExplainResultVO explainResultVo = explainResultVoList.get(i);
-            if (needPushWarnMsgExtraKeyWords.contains(explainResultVo.getExtra())) {
+            if (!StringUtils.isEmpty(explainResultVo.getExtra()) && needPushWarnMsgExtraKeyWords.contains(explainResultVo.getExtra())) {
                 analyzeExplainResultVo.buildNeedPushWarnMsg(String.format("其他项包含：%s，请立即检查",explainResultVo.getExtra()));
                 return;
             }

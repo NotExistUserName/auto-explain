@@ -22,6 +22,7 @@ public class AnalyzeExtraHandler extends AbstractAnalyzeExplainResultBaseHandler
         if (StringUtils.isEmpty(needPushWarnMsgExtraKeyWords)) {
             throw new IllegalArgumentException("needPushWarnMsgExtraKeyWords cannot be null");
         }
+        this.needPushWarnMsgExtraKeyWords = needPushWarnMsgExtraKeyWords;
         this.setNextHandler(nextHandler);
     }
 

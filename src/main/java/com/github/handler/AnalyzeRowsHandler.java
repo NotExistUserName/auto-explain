@@ -33,7 +33,7 @@ public class AnalyzeRowsHandler extends AbstractAnalyzeExplainResultBaseHandler{
             ExplainResultVO explainResultVo = explainResultVoList.get(i);
             scanRows *= explainResultVo.getRows();
         }
-        if (scanRows > scanRowsThreshold) {
+        if (scanRows >= scanRowsThreshold) {
             analyzeExplainResultVo.buildNeedPushWarnMsg(String.format("扫描行数：%s，超出阈值：%s，请立即检查",scanRows,scanRowsThreshold));
         }
     }

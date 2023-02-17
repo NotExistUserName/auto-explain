@@ -45,20 +45,12 @@ import java.util.List;
                 method = "prepare",
                 args = {Connection.class, Integer.class})
 )
-//导入咱们需要的配置类，注入邮件发送监听者与springboot邮件发送对象
-@Import(value = AutoInjectBeansConfiguration.class)
 public class AutoExplainInterceptor implements Interceptor {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(AutoExplainInterceptor.class);
 
     @Autowired
     private ApplicationContext applicationContext;
-
-    /**
-     * 是否自动生成执行计划，默认为false
-     */
-    @Value("${mybatis.enable.auto-explain:false}")
-    private Boolean autoExplain;
 
     /**
      * 需要推送告警信息的类型关键字，多个以英文逗号分割
@@ -79,10 +71,6 @@ public class AutoExplainInterceptor implements Interceptor {
     private String needPushWarnMsgExtraKeyWords;
 
     public Object intercept(Invocation invocation) throws Throwable {
-        if (!autoExplain) {
-            //if false,do nothing
-            return invocation.proceed();
-        }
         Object target = invocation.getTarget();
         Object[] args = invocation.getArgs();
         if (target instanceof StatementHandler) {

@@ -42,10 +42,11 @@ public class SendMailUtils {
     /**
      * 发送纯文本邮件.
      *
-     * @param text    纯文本内容
+     * @param text 纯文本内容
      */
     public void sendMail(String text) {
-        this.sendMail(receiver,subject,text);
+        LOGGER.info("starting send email,text:{}", text);
+        this.sendMail(receiver, subject, text);
     }
 
     /**
@@ -56,7 +57,7 @@ public class SendMailUtils {
      * @param text    纯文本内容
      */
     public void sendMail(String to, String subject, String text) {
-        CompletableFuture.runAsync(()->{
+        CompletableFuture.runAsync(() -> {
             try {
                 SimpleMailMessage message = new SimpleMailMessage();
                 message.setFrom(username);
@@ -66,7 +67,7 @@ public class SendMailUtils {
                 javaMailSender.send(message);
                 LOGGER.info("告警邮件发送成功");
             } catch (Exception e) {
-                LOGGER.error(String.format("push warn msg mail fail，error msg：%s",e.getMessage()),e);
+                LOGGER.error("push warn msg mail fail，error msg：{}", e.getMessage(), e);
             }
         });
     }
